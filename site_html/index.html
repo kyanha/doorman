@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>The Doorman</title>
+  <meta http-equiv="content-type"
+        content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="firewall, security, network security, system security, silent running,
+                 portknocker, port knocker, doorman, daemon, doorman daemon">
+  <style type="text/css">
+    <!--
+       p{margin-left: 3em; margin-right: 4em}
+    -->
+  </style>
+</head>
+
+
+<body style="font-family: ariel,sans-serif;
+             background-color: rgb(40,60,40);
+             text="#a0c0b0" link=orange vlink="#00c0c0" alink="#ffff00"">
+<br>
+<br>
+<center>
+<table border="1"  cellspacing="0" cellpadding="15" 
+       bgcolor=black width="80%" style="border-collapse: collapse;"
+       bordercolor="#64b07e">
+
+    <tbody><tr><td>
+
+        <div align="center"><font color="orange" size="6">The Doorman</font>
+            <br>
+            <div align="center"><font color="orange" size="4">- or -</font>
+            <br>
+            <font color="orange" size="6">"Silent Running"</font>
+        </div>
+                
+    </td></tr></tbody>
+</table><br>
+</center>
+
+<!---------------------------------------------------------------------------->
+
+<center>
+<table width="80%">
+    <tbody><tr><td>
+
+    <font color=white size=3>
+        Current version: 0.9&nbsp;&nbsp;&nbsp; Last update:&nbsp; April 20, 2006<br><br>
+        Notes:<br>
+
+	&nbsp;&nbsp;&nbsp;&nbsp;Version 0.9 of the doorman daemon fixes a few more bugs, mainly
+ 	in guest-list parsing. &nbsp;&nbsp; Version 0.9 of the knocker adds a new "-f &lt;config-file&gt;"
+	option, to let people run it from USB memory sticks.  &nbsp;&nbsp;   WindowsNT, 2000, &amp;
+        XP users will now find KNOCK.CFG in their profile directories.  See KNOCKCFG.TXT. <br><br>
+	From version 0.81:<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;The "silent doorman" problem, in which the doorman mysteriously and stubbbornly
+	ignores all knocks, can now be remedied by use of a new "-X" command-line parameter and 
+	"link-header-length" configuration parameter. See the "README" file.
+     
+    </font>
+    </td></tr></tbody>
+</table>
+</center>
+
+<!---------------------------------------------------------------------------->
+
+<center>
+<br>
+<table border="1"  cellspacing="0" cellpadding="15" 
+       bgcolor=black width="80%" style="border-collapse: collapse;"
+       bordercolor="#64b07e">
+
+    <tbody><tr><td>
+
+<font color=#64c07e size=3>
+
+<br>
+<br>
+<b><big>Summary</big></b>
+<br>
+<p>
+This project allows a server to run silently, invisibly, with all TCP
+ports closed... except to those who know... <b><i>the secret knock!</i></b>
+<br>
+<br>
+<br>
+</p>
+<b><big>Discussion</big></b>
+<br>
+<p>
+The doorman is intended to run on systems which have their firewall
+rules turned down tightly enough as to be effectively invisible
+to the outside world. &nbsp;&nbsp; The doorman adds and removes
+extra rules in a carefully controlled manner.
+<br>
+<br>
+Using metaphor 1...<br>
+The doorman daemon "guards the door" of a host, admitting
+only recognized parties.&nbsp;&nbsp; It
+allows a server which is not intended for general public access to run
+with all of its TCP ports closed to the outside
+world.&nbsp;&nbsp; A matching "knocker" is provided, with which to
+persuade the doorman to open the door a crack, just wide enough for a
+single TCP connection from a single IP address.
+<br>
+<br>
+And now, switching to metaphor 2... :)<br>
+A private server thus rigged for silent running has greatly enhanced security.
+&nbsp; Port scans cannot reveal its existence. &nbsp; Even if its existence
+is known by other means (or the firewall isn't all that tight), possible bugs in
+server code cannot be exploited; packets from unknown sources simply never
+get to the bug.
+<br>
+<br>
+The current implementation of the
+doorman, "doormand",&nbsp; is suitable for protecting only TCP services
+on Unix-type
+systems. &nbsp; &nbsp; The door-knocker, "knock",&nbsp; can be run
+under Unix, GNU/Linux, or&nbsp; Microsoft Windows. <br>
+<br>
+The doorman is based on an original idea of <b>Martin Krzywinski</b>,
+who proposed watching firewall logs for a sequence of packets directed
+to closed ports, which method he described in
+<a href="http://www.samag.com/articles/2003/0306/">Sysadmin magazine</a>
+and
+<a
+ href="http://www.linuxjournal.com/article.php?sid=6811&amp;mode=thread&amp;order=0">linuxjournal.com</a>.
+<br>
+You might also visit his pages at
+<a href="http://www.portknocking.org/">www.portknocking.org</a>.<br>
+<br>
+This particular implementation deviates a bit from his original
+proposal, in that the doorman watches for only a single UDP packet.
+&nbsp;
+To get the doorman to open up, the packet must contain an MD5 hash
+which correctly hashes a shared secret, salted with a 32-bit random number,
+the identifying user or group-name, and the requested service port-number.
+<br>
+<br>
+To explain a bit further, here are HTML versions of the manual pages
+included in the tarball:
+<br>
+</big>
+<p>
+<pre><big><big><p>
+&nbsp;&nbsp;<a href="doormand_8.html">doormand.8</a>
+&nbsp;&nbsp;<a href="doormand_cf_5.html">doormand.cf.5</a>
+&nbsp;&nbsp;<a href="guestlist_5.html">guestlist.5</a>
+&nbsp;&nbsp;<a href="knock_1.html">knock.1</a>
+&nbsp;&nbsp;<a href="knockcf_5.html">knockcf.5</a>
+
+&nbsp;&nbsp;<a href="KNOCK.HTM">KNOCK.HTM (for the Windows version of the knocker)</a>
+<br></big></big>
+</pre>
+<big><br>
+</p>
+
+</td></tr></tbody>
+</table><br>
+
+<!---------------------------------------------------------------------------->
+
+<br>
+<table border="1"  cellspacing="0" cellpadding="15" 
+       bgcolor=black width="80%" style="border-collapse: collapse;"
+       bordercolor="#64b07e">
+
+    <tbody><tr><td>
+
+
+<font color=#64c07e size=3>
+
+
+<br>
+<b><big>Download</big></b>
+<br>
+<p>
+<a href="http://sourceforge.net/project/showfiles.php?group_id=92394&release_id=257407"> The doorman &amp;
+knocker are here</a> &nbsp;  &nbsp;  (there is also a pre-compiled Windows knocker.)
+</p>
+<br>
+<p>
+Masochistic guinea-pigs may use anonymous cvs to get the bleeding-edge code:
+<br>
+<br>
+&nbsp; &nbsp; &gt;  cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/doorman login
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp; (When prompted for a password for anonymous, simply press the Enter key.)
+<br>
+&nbsp; &nbsp; &gt;  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/doorman co doorman
+</p>
+<br>
+<br>
+</big>
+<hr size=2  noshade><br>
+<p>
+This is 'beta' software, and, of this date, has been tested only
+under SuSE Linux 7.1 - 9.3. <br>
+While the doorman daemon should build and function on most linux distributions,
+as well as FreeBSD, netBSD, OpenBSD, and MacOS X, only 'knock' has been tested on them.
+<br>
+<br>
+If you have any comments, suggestions, complaints, bug reports,
+( even flames! ), please feel free to mail
+<br><b>bward2</b> at <b>users.sourceforge.net.</b>
+</p>
+<br>
+</td></tr></tbody>
+</table><br>
+<br>
+</center>
+
+
+<!---------------------------------------------------------------------------->
+
+
+<center>
+<table width="80%">
+    <tbody><tr><td>
+
+        <font size="2" color=white>
+         keywords = "firewall, security, network security, system security, silent running,
+         portknocker, port knocker, portknocking, port knocking, doorman, daemon, doorman daemon"
+<br><br><br>
+Hosted by:
+<a href="http://sourceforge.net"><img
+ src="http://sourceforge.net/sflogo.php?group_id=92394&amp;type%0A=2"
+  border="0" alt="SourceForge.net Logo"></a>
+
+&nbsp;  &nbsp;  &nbsp;  &nbsp; Idea by:
+<a href="http://www.portknocking.org/"><img
+ src="banner-2.png"
+  border="0" alt="Portknocking.org Banner"></a>
+
+<font size="2" color=white>
+&nbsp;  &nbsp;  &nbsp;  &nbsp; HTML by:
+<a href="http://www.vim.org"><img
+ src="vim_small.gif"
+  border="0" alt="Vim Logo"></a>
+</font>
+
+<font size="2" color=white>
+&nbsp;  &nbsp;  &nbsp;  &nbsp; Fuelled by:
+<a href="http://www.moosehead.com"><img
+ src="MoosePale_small.gif"
+  border="0" alt="Mooshead Pale Ale gif"></a>
+</font>
+
+    </td></tr></tbody>
+</table>
+</center>
+
+<br><br><br>
+
+</body>
+</html>

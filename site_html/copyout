@@ -1,0 +1,4 @@
+#!/bin/sh
+
+scp  *.html ../KNOCK.HTM vim_editor.gif banner-2.png vim_small.gif MoosePale_small.gif bward2@doorman.sourceforge.net:/home/groups/d/do/doorman/htdocs
+

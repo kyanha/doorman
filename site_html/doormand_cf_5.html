@@ -1,0 +1,149 @@
+<html>
+<head></head>
+<body>
+<pre>
+
+doormand.cf(5)                 Doorman &amp; Knocker                doormand.cf(5)
+
+
+
+<b>NAME</b>
+       <b>doormand.cf </b>- The <b>doormand </b>configuration file
+
+<b>DESCRIPTION</b>
+       This  is  the main configuration file for the <b>doormand </b>daemon.  It con-
+       sists of simple keyword-value pairs, one pair per  line;  keywords  are
+       not  case-sensitive.   Any  part of a line following a '#' character is
+       ignored, and may be used as a  comment.   Blank  lines  are  permitted.
+       Unrecognized keywords are ignored without warning messages.
+
+
+
+<b>KEYWORDS</b>
+       <b>connection-delay-1 </b> -  the maximum number of microseconds to wait for a
+           complete 3-way handshake between the client and the requested  ser-
+           vice, after seeing the initial 'SYN' from the client.
+           Default value is 500000 usecs (one half second)
+
+       <b>connection-delay-2 </b> -  the number of seconds delay between checks on an
+           established connection, waiting for it  to  be  broken.   When  the
+           doorman  finds the connection has been broken, it removes the fire-
+           wall rule which permitted that connection.   Default is 5  seconds.
+
+       <b>firewall-add </b> - the full pathname of the script to be used to add fire-
+           wall rules.  No default.
+
+       <b>firewall-del </b>- the full pathname of the script to  be  used  to  delete
+           firewall rules.  No default.
+
+       <b>guestlist </b> -  the  full  pathname  of  the  doorman's "guest list".  No
+           default.
+
+       <b>link-header-length </b>- the number of bytes in the data-link header of the
+           interface that the doorman is listening on.  You only need to spec-
+           ify this if 'pcap' guesses this value incorrectly;  this  is  rare,
+           but  -has- been reported, usually on PPPoE interfaces.  The doorman
+           uses the 'pcap' package ("Packet Capture"; the Berkeley packet fil-
+           ter  package)  to  watch  for  packets.  If pcap gets the data-link
+           header length wrong, the doorman will not recognize knock  packets,
+           and will do and log absolutely nothing.
+
+           To  determine  the  correct  value to use, dump received packets to
+           standard output by using the doormand "-D"  and  "-X"  command-line
+           options.   Send  a few 'knock' packets, and look for "45 00" in the
+           dump.  These are usually the first 2 bytes of the IP header;  count
+           the  number  of bytes before them, and you have length of the data-
+           link header.
+
+       <b>interface </b>- the device name of the interface at which which the doorman
+           should listen.  No default.
+
+       <b>logfile </b> -  the  full  pathname of the file to which events are logged;
+           this may be the system messages logfile  if  desired.   Default  is
+           "/var/log/doorman".
+
+       <b>loglevel </b> -  the  name  of  the  severity level at which logging should
+           occur.  The names are not case-sensitive.  Valid  level  names,  in
+           order of severity, are:
+               DEBUG  INFO  NOTICE  WARNING
+               ERROR  CRIT  ALERT   EMERG
+           For  normal  usage,  INFO  or NOTICE will probably be the preferred
+           level.  Default level is DEBUG.
+
+       <b>pidfile </b>- the full pathname of the process-ID file created by doormand.
+           Default is "/var/run/doorman.pid".  Doormand removes this file just
+           before it stops running, except in the case  of  a  program  crash,
+           after which it must be removed manually.
+
+       <b>port </b> -  the  UDP  port  number  at which the doorman should listen for
+           "knocks".  Default is 1001.
+
+       <b>hash-archive </b>- the name of the file  in  which  information  about  old
+           "knock" packets is stored.  The doorman uses this file to make sure
+           that a successful knock cannot be re-used by someone sniffing traf-
+           fic to your firewall.
+
+       <b>hash-archive-size </b> -  the  number  of old knocks which are to be remem-
+           bered.  This must be at least 1000, but should be 50000 or more, to
+           make  replay attacks difficult.  The hash archive consumes 20 bytes
+           of disk space per  knock.   In  the  current  implementation,  some
+           knocks  may  be lost when the doorman is restarted after this value
+           is reduced, causing the archive to be re-created as a smaller file.
+           Default is 100000 knocks.
+
+       <b>waitfor </b> - the number of seconds that may elapse after a valid "knock",
+           during which a connection may be made  to  the  requested  service.
+           Default is 10 seconds.
+
+
+
+<b>EXAMPLE </b><b>FILES</b>
+       for a production environment:
+          interface         eth0
+          port              1001
+          waitfor           10
+          pidfile           /var/run/doormand.pid
+          logfile           /var/log/messages
+          loglevel          NOTICE
+          guestlist         /usr/local/etc/doormand/guestlist
+          firewall-add      /usr/local/etc/doormand/firewall_add
+          firewall-del      /usr/local/etc/doormand/firewall_delete
+          hash-archive-size 50000
+          hash-archive      /var/doormand.hash-archive
+
+
+       for testing:
+          interface           lo
+          port                1033
+          waitfor             10
+          pidfile             /tmp/doormand.pid
+          logfile             /dev/tty
+          loglevel            DEBUG
+          guestlist           test_guestlist
+          firewall-add        test_add_script
+          firewall-del        test_del_script
+          hash-archive-size   50000
+          hash-archive        /tmp/doormand.hash-archive
+          link-header-length  16  # if doorman is ignoring knocks,
+                                  # you can experiment by using
+                                  # different values for this.
+
+
+<b>SEE </b><b>ALSO</b>
+       <b>knock(</b>1), <b>knockcf(</b>5), <b>doormand(</b>8), <b>guestlist(</b>5)
+
+
+<b>ACKNOWLEDGEMENT</b>
+       <b>doormand </b> and <b>knock </b>are an implementation of an original idea by <b>Martin</b>
+       <b>Krzywinski. </b> See his site at http://www.portknocking.org
+
+
+<b>COPYRIGHT</b>
+       Copyright (c) 2003-2006, J.B.Ward
+       &lt;bward2@users.sourceforge.net&gt;
+
+
+
+
+Doorman, V0.9                    April 18 2006                  doormand.cf(5)
+</body></html>

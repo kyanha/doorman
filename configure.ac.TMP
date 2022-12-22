@@ -1,0 +1,177 @@
+
+AC_PREREQ(2.59)
+AC_INIT([doormand],[V0.7],[bward2@users.sourceforge.net])
+AM_INIT_AUTOMAKE
+
+AC_CONFIG_SRCDIR([doormand.c])
+AC_CONFIG_HEADERS([config.h])
+
+AC_CONFIG_LIBOBJ_DIR([Replacement_fns])
+
+AC_PREFIX_DEFAULT([/usr/local])
+
+AC_LANG(C)
+
+AC_PROG_GCC_TRADITIONAL
+AC_C_CONST
+AC_PROG_CC
+
+AM_PROG_LEX
+AC_FUNC_REALLOC
+
+
+AC_PATH_PROG([LSOF], [lsof], [no],
+             [/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin])
+if test "$LSOF" == "no"; then
+    echo -e "\a"
+    echo "*** Utility 'lsof' is missing; doormand cannot function properly without it."
+    echo "*** (Get lsof at: ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/lsof.tar.gz)"
+    echo
+fi
+
+#AC_HEADER_STDC
+#AC_HEADER_SYS_WAIT
+#AC_HEADER_DIRENT
+#AC_HEADER_MAJOR
+#AC_HEADER_TIME
+
+#   AM_PROG_INSTALL_SH([my-install_sh])
+
+
+#AC_CHECK_HEADERS([arpa/inet.h])
+#AC_CHECK_HEADERS([errno.h])
+#AC_CHECK_HEADERS([error.h])
+#AC_CHECK_HEADERS([fcntl.h])
+#AC_CHECK_HEADERS([limits.h])
+
+#AC_CHECK_HEADERS([inn/clibrary.h])   For the time being, force use of   ***
+#AC_CHECK_HEADERS([inn/md5.h])        our 'Replacement_fns' md5 headers. ***
+#AC_CHECK_HEADERS([hmac-md5.h])
+#AC_CHECK_HEADERS([md5.h])
+#AC_CHECK_HEADERS([md5global.h])
+#AC_CHECK_HEADERS([openssl/md5.h])
+
+#AC_CHECK_HEADERS([namespace.h])
+#AC_CHECK_HEADERS([netdb.h])
+#AC_CHECK_HEADERS([net/ethernet.h])
+
+#   AC_CHECK_HEADERS([net/if.h], [], [],
+#   [#if NETINET_SYS_SOCKET_H
+#   # include <sys/socket.h>
+#   # endif
+#   ])
+
+#AC_CHECK_HEADERS([netinet/if_fddi.h])
+AC_CHECK_HEADERS([netinet/in_systm.h])
+
+AC_CHECK_HEADERS([netinet/in.h])
+
+#   AC_CHECK_HEADERS([netinet/ip.h], [], [],
+#   [#if NETINET_IN_H
+#   # include <netinet/in.h>
+#   # endif
+#   ])
+
+AC_CHECK_HEADERS([netinet/tcp.h], [], [],
+[#if NETINET_SYS_SOCKET_H
+# include <sys/socket.h>
+# endif
+])
+
+AC_CHECK_HEADERS([netinet/udp.h], [], [],
+[#if NETINET_SYS_SOCKET_H
+# include <sys/socket.h>
+# endif
+])
+
+#AC_CHECK_HEADERS([paths.h])
+AC_CHECK_HEADERS([pcap.h])
+AC_CHECK_HEADERS([pcap/pcap.h])
+#AC_CHECK_HEADERS([signal.h])
+#AC_CHECK_HEADERS([stdarg.h])
+#AC_CHECK_HEADERS([stdio.h])
+#AC_CHECK_HEADERS([stdlib.h])
+#AC_CHECK_HEADERS([string.h])
+AC_CHECK_HEADERS([sys/cdefs.h])
+#AC_CHECK_HEADERS([sys/ethernet.h])
+#AC_CHECK_HEADERS([sys/ioctl.h])
+#AC_CHECK_HEADERS([sys/mkdev.h])
+#AC_CHECK_HEADERS([sys/param.h])
+#AC_CHECK_HEADERS([sys/socket.h])
+AC_CHECK_HEADERS([sys/sockio.h])
+#AC_CHECK_HEADERS([sys/stat.h])
+#AC_CHECK_HEADERS([sys/time.h])
+#AC_CHECK_HEADERS([sys/types.h])
+#AC_CHECK_HEADERS([sysexits.h])
+#AC_CHECK_HEADERS([time.h])
+#AC_CHECK_HEADERS([un-namespace.h])
+#AC_CHECK_HEADERS([unistd.h])
+
+#AC_CHECK_MEMBERS([struct stat.st_rdev])
+
+
+# find MD5 library                       For the time being, force use     ***
+#                                        of our 'Replacement_fns' md5 code ***
+#
+#AC_SEARCH_LIBS([MD5Init], [md5 crypt sasl inn],,
+#    LDFLAGS=-L/usr/lib/news
+#    AC_SEARCH_LIBS([MD5Update], inn,,
+#        LDFLAGS=-L/usr/local/lib
+#        AC_SEARCH_LIBS([MD5Final], [md5 crypt sasl inn])
+#    )
+#)
+
+AC_CHECK_FUNC([MD5Init], ,  [AC_LIBOBJ([md5])])
+AC_CHECK_FUNC([hmac_md5], , [AC_LIBOBJ([hmac_md5])])
+AC_CHECK_FUNC([daemon], ,   [AC_LIBOBJ([daemon])])
+
+AC_SEARCH_LIBS([socket], socket)
+AC_SEARCH_LIBS([yywrap], [fl l])
+AC_SEARCH_LIBS([gethostbyname], nsl)
+AC_SEARCH_LIBS([pcap_open_live], pcap, ,
+ [echo;echo -e "\a";
+  echo '*** pcap library is missing; doormand will not build. ***'
+  echo;echo])
+
+#AC_CHECK_FUNCS([alarm])
+#AC_CHECK_FUNCS([bzero])
+#AC_CHECK_FUNCS([daemon])
+#AC_CHECK_FUNCS([db_strerror])
+#AC_CHECK_FUNCS([dup2])
+#AC_CHECK_FUNCS([fork])
+#AC_CHECK_FUNCS([fstat])
+#AC_CHECK_FUNCS([gethostbyaddr])
+#AC_CHECK_FUNCS([gethostbyname])
+#AC_CHECK_FUNCS([gethostname])
+#AC_CHECK_FUNCS([getpass])
+#AC_CHECK_FUNCS([gettimeofday])
+#AC_CHECK_FUNCS([inet_ntoa])
+#AC_CHECK_FUNCS([inet_aton])
+#AC_CHECK_FUNCS([malloc])
+#AC_CHECK_FUNCS([memset])
+#AC_CHECK_FUNCS([socket])
+#AC_CHECK_FUNCS([stat])
+#AC_CHECK_FUNCS([strcasecmp])
+#AC_CHECK_FUNCS([strchr])
+#AC_CHECK_FUNCS([strerror])
+#AC_CHECK_FUNCS([strrchr])
+#AC_CHECK_FUNCS([strsignal])
+#AC_CHECK_FUNCS([strtol])
+
+#AC_FUNC_FORK
+#AC_FUNC_MALLOC
+#AC_FUNC_MEMCMP
+#AC_FUNC_STAT
+#AC_FUNC_STRFTIME
+#AC_FUNC_STRTOD
+#AC_FUNC_VPRINTF
+
+#AC_STRUCT_TM
+#AC_TYPE_SIGNAL
+#AC_TYPE_SIZE_T
+#AC_TYPE_UID_T
+
+
+AC_CONFIG_FILES([ Makefile ])
+AC_OUTPUT
+

@@ -1,0 +1,12 @@
+Notes:
+The Doorman is "port-knocking" listener daemon which helps you 
+secure private servers.   It allows a Unix or GNU/Linux server to run 
+invisibly, with all TCP ports closed.
+
+This is still 'beta' software.  Of this date, has been tested only
+under SuSE Linux 7.1, 8.1, & 9.0.
+While the doorman daemon should build and function on most linux 
+distributions,  as well as FreeBSD, netBSD, OpenBSD, and
+MacOS X, only 'knock' has been tested on them.
+
+

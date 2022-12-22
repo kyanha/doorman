@@ -1,0 +1,8 @@
+#!/bin/sh
+
+man2html  ../doormand.8 > doormand_8.html
+man2html  ../doormand.cf.5 > doormand_cf_5.html
+man2html  ../guestlist.5 > guestlist_5.html
+man2html  ../knock.1 > knock_1.html
+man2html  ../knockcf.5 > knockcf_5.html
+

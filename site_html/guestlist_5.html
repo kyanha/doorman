@@ -1,0 +1,86 @@
+<html>
+<head></head>
+<body>
+<pre>
+
+guestlist(5)                   Doorman &amp; Knocker                  guestlist(5)
+
+
+
+<b>NAME</b>
+       <b>guestlist </b>- The secondary <b>doormand </b>configuration file
+
+<b>DESCRIPTION</b>
+       The  doorman  daemon <b>doormand </b>requires a list of permitted "guests", or
+       groups.  There must be one record per group, with the following order:
+
+       &lt;groupname&gt; &lt;secret&gt; &lt;port1&gt; &lt;port2&gt; .. &lt;address1&gt; &lt;address2&gt; ..
+
+       Records may span multiple lines.  The groupname MUST begin on the first
+       character  of a line.  Continuation lines MUST be preceeded by at least
+       one character of whitespace (tabs or spaces).  Tabs and  space  charac-
+       ters may be freely used in any order.
+
+       Any  part  of  a  line following a '#' character is ignored, and may be
+       used as a comment.  Blank lines are ignored.
+
+       This file MUST be readable and writeable by root, only.
+
+
+       <b>groupname </b>- The name which is  sent  by  a  <b>knock </b> client  to  identify
+           itself.   Group  names  may be up to 32 characters in length.  Both
+           group names and secrets may contain any alphanumeric character,  as
+           well as the characters:  !@$%^&amp;*()_-+=|\[]{};:'"&lt;&gt;,?/
+
+           Note  that whitespace, "#", and the "." character (period, or deci-
+           mal point) are not permitted.
+
+       <b>secret </b> - an authenticating password.  This is sent by the client as an
+           MD5  hash  salted with the client's IP address and the rounded sec-
+           onds-of-epoch.
+
+           Secrets may be up to 64 characters in  length,  and  use  the  same
+           character set as group names. (Remember: -no- periods!)
+
+           The  existence  of  this secret in plaintext on both the client and
+           server  machines  is  the  reason  this  file,  and  the   client's
+           <b>~/.knockcf </b> file,  must be readable only by their users.   Under NO
+           circumstances should it correspond to anything in any 'passwd' file
+           anywhere.
+
+       <b>port1 </b><b>port2 </b><b>.. </b> - a whitespace-delimited list of the ports to which the
+           group may connect.  A port may be specified as a number or  a  ser-
+           vice  name;  that is, "22" and "ssh" are equivalent.  Service names
+           are case sensitive.
+
+       <b>address1 </b><b>address2 </b><b>.. </b> - a whitespace-delimited list of IP addresses  or
+           hostnames  from  which  the  group  may  connect.  Addresses may be
+           unique, or expressed as ranges by means of  an  "/nbits"  modifier.
+           Using a hostname to specify a range is permitted.  There must be no
+           whitespace before or after the "/" character.
+
+
+       <b>An </b><b>example </b><b>record:</b>
+       group187  b1g%Hairy_[seCret}!                    # groupname &amp; secret
+                 ssh 23                                 # allowed ports
+                 1.2.3.4/16   5.6.7.8  x.myplace.org/24 # allowed addresses
+
+
+<b>SEE </b><b>ALSO</b>
+       <b>knock(</b>1), <b>knockcf(</b>5), <b>doormand(</b>8), <b>doormand.cf(</b>5)
+
+
+<b>ACKNOWLEDGEMENT</b>
+       <b>doormand </b>and <b>knock </b>are an implementation of an original idea by  <b>Martin</b>
+       <b>Krzywinski. </b> See his site at http://www.portknocking.org
+
+
+<b>COPYRIGHT</b>
+       Copyright (c) 2003-2005, J.B.Ward
+       &lt;bward2@users.sourceforge.net&gt;
+
+
+
+
+Doorman, V0.9                    April 18 2006                    guestlist(5)
+</body></html>

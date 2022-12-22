@@ -1,0 +1,97 @@
+<html>
+<head></head>
+<body>
+<pre>
+
+.knockcf(5)                    Doorman &amp; Knocker                   .knockcf(5)
+
+
+
+<b>NAME</b>
+       <b>.knockcf </b>- The <b>knock </b>configuration file
+
+<b>DESCRIPTION</b>
+       The  port-knocker  client  <b>knock </b> requires  a  configuration file named
+       ".knockcf" to be in the user's home directory.  Any value in  the  file
+       may be overridden by command-line parameters to <b>knock</b>
+
+       The  file  consists  of  simple keyword-value pairs, one pair per line.
+       The keyword and value must be separated by one or  more  space  or  tab
+       characters.    Keywords are not case-sensitive, though most values are.
+       Any part of a line following a '#' character is  ignored,  and  may  be
+       used as a comment.  Blank lines are ignored.
+
+       The file MUST be readable and writeable ONLY by the owner.
+
+
+<b>RECORDS</b>
+        <b>group </b> &lt;name&gt;
+              This  specifies  the  group  name  (guest name) used to identify
+              yourself.  Group names may be up to  32  characters  in  length.
+              Both  group  names  and  secrets  may  contain  any alphanumeric
+              character, as well as the characters:  !@$%^&amp;*()_-+=|{};:'"&lt;&gt;,?/
+
+              Note  that  whitespace,  "#",  and the "." character (period, or
+              decimal point) are not permitted.
+
+        <b>secret </b> &lt;password&gt;
+              This is the password used to authenticate you  to  the  doorman.
+              Secrets   may be up to 64 characters in length, and use the same
+              character set as group names.  The secret is catenated with  the
+              IP  address  of the client machine and the seconds-of-epoch, and
+              put through an MD5 hash before being sent to the doorman.
+
+              This record may be omitted from .knockcf; if it is missing,  and
+              the  secret  is  not  included  as an option on the command line
+              (generally not a bright idea, anyway), 'knock' will  prompt  you
+              for one.
+
+        <b>port </b> &lt;integer, 1-65534&gt;
+              Knock on the specified UDP port.  The default is port 1001.
+
+        <b>run </b> "program  arg1 arg2 ... "
+              Run  this  program  after  sending the knock packet, and after a
+              1/10th second pause.  Note  that  the  entire  command  must  be
+              enclosed  in  either  single  or  double  quotes.    Two special
+              strings may be included to substitute for  command-line  parame-
+              ters.   %H%  substitutes for the hostname or IP address, and %P%
+              substitutes for the requested port number or service name.
+
+
+
+ <b>AN </b><b>EXAMPLE</b>
+       #
+       #  If any of these records is missing, its value may be
+       #  specified with a command-line option.
+       #  (You may omit the secret from both, and wait to be prompted;
+       #   this is perhaps the safest [or most paranoid] way on a unix host)
+       #
+       group       marketeers           # "Who you are" to the doorman
+       secret      b1g%Hairy_[seCret}!  # &lt;- This is why no one else should
+       #                                     be able to read this file...
+       #                                     A PLAINTEXT PASSWORD!
+       #
+       port        1001                 # The UDP port the doorman is watching
+       #
+       run         "ssh -lmyname %H%"   # Run 'ssh' after knocking.
+       #                                  The hostname used in the knock command
+       #                                  will be subsituted in place of '%H%'.
+
+
+<b>SEE </b><b>ALSO</b>
+       <b>knock(</b>1), <b>doormand(</b>8), <b>doormand.cf(</b>5), <b>guestlist(</b>5)
+
+
+<b>ACKNOWLEDGEMENT</b>
+       <b>doormand </b>and <b>knock </b>are an implementation of an original idea by  <b>Martin</b>
+       <b>Krzywinski. </b> See his site at http://www.portknocking.org
+
+<b>COPYRIGHT</b>
+       Copyright (c) 2003-2006, J.B.Ward
+       &lt;bward2@users.sourceforge.net&gt;
+
+
+
+
+Port-knocker, V0.9               April 18 2006                     .knockcf(5)
+</body></html>
