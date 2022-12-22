@@ -1,2 +1,12 @@
 CVS/
+*.o
+doormand
+config
+config.h
+Makefile
+config.log
+config.status
+knock
+stamp-h1
+.deps/
 
