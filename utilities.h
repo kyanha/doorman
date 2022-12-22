@@ -32,6 +32,11 @@
 #ifndef SRC_UTILITIES_H
 #define SRC_UTILITIES_H 1
 
+#ifndef UTILITIES_DEFINITIONS
+#define EXTERN extern
+#else
+#define EXTERN
+#endif
 
 #ifndef u_char
 #  define u_char unsigned char
@@ -79,7 +84,7 @@ void xdump (void *data, int len) ;
 #define DEBUGX err_log("doormand",LOG_MARK,LOG_DEBUG,
 
 
-FILE *_err_file ;
+EXTERN FILE *_err_file ;
 
 
 void err_log (char         *lable,

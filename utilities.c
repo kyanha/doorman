@@ -47,6 +47,8 @@
 #include <errno.h>
 #include <string.h>
 #include <time.h>
+
+#define UTILITIES_DEFINITIONS 1
 #include "utilities.h"
 
 
